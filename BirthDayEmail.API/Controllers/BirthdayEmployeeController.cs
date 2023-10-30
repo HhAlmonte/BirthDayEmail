@@ -15,7 +15,7 @@ namespace BirthDayEmail.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("SendEmailBirthDayTodayEmployees")]
         public async Task<IActionResult> SendEmailBirthDayTodayEmployees()
         {
             await _mediator.Send(new SendEmailBirthDayTodayEmployeesCommand());
