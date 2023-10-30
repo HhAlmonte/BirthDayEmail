@@ -33,7 +33,7 @@ namespace BirthDayEmail.API.Repositories
 
             var employeesBirthdayToday = await _context
                 .Employees
-                .Where(x => x.BirthDay == currentDate)
+                .Where(x => x.BirthDay.Day == currentDate.Day && x.BirthDay.Month == currentDate.Month)
                 .ToListAsync();
 
             return employeesBirthdayToday;

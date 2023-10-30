@@ -4,6 +4,7 @@ using BirthDayEmail.API.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BirthDayEmail.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231029231137_addEmailColumn")]
+    partial class addEmailColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace BirthDayEmail.API.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
-                    b.Property<int?>("SupervisorId")
+                    b.Property<int>("SupervisorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -67,6 +70,9 @@ namespace BirthDayEmail.API.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdDepartment")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -96,6 +102,9 @@ namespace BirthDayEmail.API.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdEmployee")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
@@ -107,7 +116,9 @@ namespace BirthDayEmail.API.Migrations
                 {
                     b.HasOne("BirthDayEmail.API.Entities.Supervisor", "Supervisor")
                         .WithMany()
-                        .HasForeignKey("SupervisorId");
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Supervisor");
                 });
